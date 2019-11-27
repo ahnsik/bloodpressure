@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+
+    <script>
+        // Ignore this in your implementation
+        window.isMbscDemo = true;
+    </script>
+
+    <title>Date picker</title>
+
+    <!-- Mobiscroll JS and CSS Includes -->
+    <link rel="stylesheet" href="css/mobiscroll.javascript.min.css">
+    <script src="js/mobiscroll.javascript.min.js"></script>
+
+    <style type="text/css">
+    body {
+        margin: 0;
+        padding: 0;
+    }
+    button {
+        display: inline-block;
+        outline: 0;
+        border: 0;
+        cursor: pointer;
+        background: #5185a8;
+        color: #fff;
+        text-decoration: none;
+        font-family: arial, verdana, sans-serif;
+        font-size: 14px;
+    }
+    .demo-non-form {
+        color: initial;
+        width: 100%;
+        padding: 10px;
+        margin: 6px 0 12px 0;
+        border: 1px solid #ccc;
+        border-radius: 0;
+        font-family: arial, verdana, sans-serif;
+        font-size: 14px;
+        box-sizing: border-box;
+        -webkit-appearance: none;
+    }
+
+    .external-container button.external-button {
+        font-weight: 400;
+        padding: 10px;
+        margin: 6px 0 13px 0;
+        width: 100%;
+    }
+    </style>
+
+</head>
+<body>
+
+<div mbsc-page class="demo-date-picker">
+    <h5>https://demo.mobiscroll.com/trialactivatedsuccess/javascript/calendar/date-picker</h5>
+    <div mbsc-form>
+        <div class="mbsc-grid mbsc-form-grid">
+            <div class="mbsc-row">
+                <div class="mbsc-col-sm-12 mbsc-col-md-4">
+                    <label>
+                        Mobile
+                        <input mbsc-input id="demo-calendar-mobile" data-input-style="box" data-label-style="stacked" />
+                    </label>
+                </div>
+                <div class="mbsc-col-sm-12 mbsc-col-md-4">
+                    <label>
+                        Desktop
+                        <input mbsc-input id="demo-calendar-desktop" data-input-style="box" data-label-style="stacked"  />
+                    </label>
+                </div>
+                <div class="mbsc-col-sm-12 mbsc-col-md-4">
+                    <label>
+                        Header text
+                        <input mbsc-input id="demo-calendar-header" data-input-style="box" data-label-style="stacked"  />
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="mbsc-grid">
+        <div class="mbsc-row">
+            <div class="mbsc-col-sm-12 mbsc-col-md-6">
+                <label for="demo-calendar-non-form">Date</label>
+                <input id="demo-calendar-non-form" class="demo-non-form" />
+            </div>
+            <div class="mbsc-col-sm-12 mbsc-col-md-6">
+                <div class="mbsc-row mbsc-align-items-end">
+                    <div class="mbsc-col-9">
+                        <label for="demo-calendar-external">Show on button click only</label>
+                        <input id="demo-calendar-external" class="demo-non-form" />
+                    </div>
+                    <div class="mbsc-col-3 external-container">
+                        <button id="show-demo-calendar-external" class="external-button">Show</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    mobiscroll.settings = {
+        lang: 'en',                       // Specify language like: lang: 'pl' or omit setting to use default
+        theme: 'ios',                     // Specify theme like: theme: 'ios' or omit setting to use default
+        display: 'bubble'                 // Specify display mode like: display: 'bottom' or omit setting to use default
+    };
+
+    var now = new Date();
+
+    mobiscroll.calendar('#demo-calendar-mobile', {
+        onInit: function (event, inst) {  // More info about onInit: https://docs.mobiscroll.com/4-8-5/javascript/calendar#event-onInit
+            inst.setVal(now, true);
+        }
+    });
+
+    mobiscroll.calendar('#demo-calendar-desktop', {
+        touchUi: false,                   // More info about touchUi: https://docs.mobiscroll.com/4-8-5/javascript/calendar#opt-touchUi
+        onInit: function (event, inst) {  // More info about onInit: https://docs.mobiscroll.com/4-8-5/javascript/calendar#event-onInit
+            inst.setVal(now, true);
+        }
+    });
+
+    mobiscroll.calendar('#demo-calendar-header', {
+        headerText: '{value}',            // More info about headerText: https://docs.mobiscroll.com/4-8-5/javascript/calendar#opt-headerText
+        onInit: function (event, inst) {  // More info about onInit: https://docs.mobiscroll.com/4-8-5/javascript/calendar#event-onInit
+            inst.setVal(now, true);
+        }
+    });
+
+    mobiscroll.calendar('#demo-calendar-non-form', {
+        onInit: function (event, inst) {  // More info about onInit: https://docs.mobiscroll.com/4-8-5/javascript/calendar#event-onInit
+            inst.setVal(now, true);
+        }
+    });
+
+    var instance = mobiscroll.calendar('#demo-calendar-external', {
+        showOnTap: false,                 // More info about showOnTap: https://docs.mobiscroll.com/4-8-5/javascript/calendar#opt-showOnTap
+        showOnFocus: false,               // More info about showOnFocus: https://docs.mobiscroll.com/4-8-5/javascript/calendar#opt-showOnFocus
+        onInit: function (event, inst) {  // More info about onInit: https://docs.mobiscroll.com/4-8-5/javascript/calendar#event-onInit
+            inst.setVal(new Date(), true);
+        }
+    });
+
+    document
+        .getElementById('show-demo-calendar-external')
+        .addEventListener('click', function () {
+            instance.show();
+        }, false);
+</script>
+
+</body>
+</html>

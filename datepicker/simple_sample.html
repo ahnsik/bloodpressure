@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+
+    <title>Date picker</title>
+
+    <!-- Mobiscroll JS and CSS Includes -->
+    <link rel="stylesheet" href="css/mobiscroll.javascript.min.css">
+    <script src="js/mobiscroll.javascript.min.js"></script>
+</head>
+
+<body>
+      <div>
+        <h1> Calendar library test </div>
+        <input id="demo-calendar-non-form" class="demo-non-form" />
+        <h5>https://demo.mobiscroll.com/trialactivatedsuccess/javascript/calendar/date-picker</h5>
+      </div>
+<script>
+    var now = new Date();
+    mobiscroll.calendar('#demo-calendar-non-form', {
+        touchUi: false,                   // More info about touchUi: https://docs.mobiscroll.com/4-8-5/javascript/calendar#opt-touchUi
+        headerText: '{value}',            // More info about headerText: https://docs.mobiscroll.com/4-8-5/javascript/calendar#opt-headerText
+        // showOnTap: true,                 // More info about showOnTap: https://docs.mobiscroll.com/4-8-5/javascript/calendar#opt-showOnTap
+        // showOnFocus: true,               // More info about showOnFocus: https://docs.mobiscroll.com/4-8-5/javascript/calendar#opt-showOnFocus
+        onInit: function (event, inst) {  // More info about onInit: https://docs.mobiscroll.com/4-8-5/javascript/calendar#event-onInit
+            inst.setVal(now, true);
+        }
+    });
+</script>
+</body>
+
+</html>
