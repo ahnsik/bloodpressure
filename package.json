@@ -9,7 +9,8 @@
   "author": "최안식",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "node-mysql": "^0.4.2"
   },
   "devDependencies": {},
   "keywords": [
