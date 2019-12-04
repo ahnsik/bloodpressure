@@ -1,0 +1,19 @@
+{
+  "name": "bp_server",
+  "version": "1.0.0",
+  "description": "혈압 매일매일 기록하기",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "최안식",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {},
+  "keywords": [
+    "blood",
+    "pressure"
+  ]
+}
