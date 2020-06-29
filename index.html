@@ -4,6 +4,8 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
 
+	<LINK REL="SHORTCUT ICON" HREF="./fat_favicon.ico">
+
 	<!-- https://www.cssscript.com/developer-date-picker/ -->
 	<link rel="stylesheet" href="thedatepicker/dist/the-datepicker.css">
 	<script src="thedatepicker/dist/the-datepicker.min.js"></script>
@@ -27,12 +29,39 @@
 		width: 32px;
 		height: 32px;
 	}
+
+	.back,.cancel {
+	  position: absolute;
+	  overflow: hidden;
+	  width: auto;
+	  height: 30px;
+	  font-family: sans-serif;
+	  font-size: 12px;
+	  font-weight: bold;
+	  line-height: 30px;
+	  text-overflow: ellipsis;
+	  text-decoration: none;
+	  white-space: nowrap;
+	  background: none;
+	  right: 10px;
+	  margin: 4px;
+	  padding: 0 10px;
+	  color: #EEE;
+	  text-shadow: black 0 -1px 0;
+	  border: 1px solid #;
+	  border-radius: 8px;
+	  background-image: none;
+	  background-color: #777;
+	}
+
 	@media ( max-width: 768px ) {
 		body {
 			margin: 0;
 			padding: 0;
 			background: #FEC;
-		}
+			height: 100vw;
+	    transform: rotate(0deg);
+	  }
 		li {
 			margin: 3px;
 			padding: 0;
@@ -78,7 +107,7 @@
 		<div class="toolbar">
 			<h1>오늘의 체성분 입력</h1>
 		</div>
-		<form method="post">
+		<form method="post" action="new">
 			<ul>
 				<li><img src="./heart_high.svg" class="icon"/> <input placeholder="수축기혈압" type="number" name="bp_high" id="bp_h" /> </li>
 				<li><img src="./heart_low.svg" class="icon"/> <input placeholder="이완기혈압" type="number" name="bp_low" id="bp_l" /> </li>
@@ -90,27 +119,39 @@
 				<li><img src="./bmi.svg" class="icon"/> <input placeholder="BMI지수"    type="number" step="0.1" name="bmi" id="bmi" /> </li>
 				<li><img src="./memo.svg" class="icon"/> <textarea name="memo" rows="4" id="memo">메모(운동기록)</textarea> </li>
 				<li>	<input type="submit" class="submit" name="action" value="기록저장" />
-							<input type="text" id="date-picker" class="date-picker" readonly="readonly">
+							<input type="text" id="date-picker" class="date-picker" readonly="readonly"/>
 					</li>
 			</ul>
 		</form>
-		<ul class="edgetoedge">
-			<li class="arrow"><a href="#dates">Graphs</a></li>
+		<!-- <ul class="edgetoedge">
+			<li class="arrow"><a href="#graphs">Graphs</a></li>
 			<li class="arrow"><a href="#about">About</a></li>
-			<a class="button flip" href="#settings">Settings</a>
-		</ul>
+		</ul> -->
 	</div>
+
+	<div id="graphs">
+		<div class="toolbar">
+			<h1>Graphs</h1>
+			<a class="button back" href="#">Back</a>
+		</div>
+		<div>
+			<p>Records and Graphs</p>
+			<canvas id="bar_graph">
+			</canvas>
+		</div>
+	</div>
+
 	<div id="about">
 		<div class="toolbar">
 			<h1>About</h1>
 			<a class="button back" href="#">Back</a>
 		</div>
 		<div>
-			<p>Kilo gives you easy access to your food diary</p>
+			<p>Record your BloodPressure and Weights. <br/>- everyday diary.</p>
 		</div>
 	</div>
 
-	<div id="createEntry">
+	<!-- <div id="createEntry">
 		<div class="toolbar">
 			<h1>New Entry</h1>
 			<a class="button cancel" href="#">Cancel</a>
@@ -122,7 +163,7 @@
 				<li><input type="submit" class="submit" name="action" value="Save Entry" /> </li>
 			</ul>
 		</form>
-	</div>
+	</div> -->
 	<div id="settings">
 		<div class="toolbar">
 			<h1>Settings</h1>
@@ -130,8 +171,9 @@
 		</div>
 		<form method="post">
 			<ul>
-				<li><input placeholder="Age" type="text" name="age" id="age" /> </li>
-				<li><input placeholder="Budget" type="text" name="budget" id="budget" /> </li>
+				<li><input placeholder="DB server address" type="text" name="age" id="server" /> </li>
+				<li><input placeholder="ID" type="text" name="budget" id="id" /> </li>
+				<li><input placeholder="PW" type="text" name="budget" id="pw" /> </li>
 				<li><input type="submit" class="submit" name="action" value="Save Changes" /> </li>
 			</ul>
 		</form>
@@ -140,15 +182,15 @@
 	<script>
 	    var now = new Date();
 			(function () {
-					const date_input = document.getElementById("date-picker");
-					const datepicker = new TheDatepicker.Datepicker(date_input);
-					var date_string = ""+ now.getFullYear()+"-"+(now.getMonth()+1)+"-"+now.getDate();
-					console.log( date_string);
-					datepicker.options.setInputFormat("Y-m-d");		// 표시 형식 지정
-					// datepicker.options.setInitialDate("2019-11-24");
-					datepicker.options.setInitialDate( date_string );
-					// datepicker.options.setMinDate('today');		// 과거 날짜를 선택 못하게 하는 방법
-					datepicker.render();
+				const date_input = document.getElementById("date-picker");
+				const datepicker = new TheDatepicker.Datepicker(date_input);
+				var date_string = ""+ now.getFullYear()+"-"+(now.getMonth()+1)+"-"+now.getDate();
+				console.log( date_string);
+				datepicker.options.setInputFormat("Y-m-d");             // 표시 형식 지정
+				// datepicker.options.setInitialDate("2019-11-24");
+				datepicker.options.setInitialDate( date_string );
+				// datepicker.options.setMinDate('today');              // 과거 날짜를 선택 못하게 하는 방법
+				datepicker.render();
 			})();
 	</script>
 
